@@ -15,10 +15,11 @@
 
 package view.windows;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import managers.FileManager;
 import managers.SettingsManager;
 import managers.WindowManager;
-import managers.ActionManager;
 
 import java.util.logging.Logger;
 
@@ -26,21 +27,21 @@ import utils.Settings;
 import utils.jsyntax.JEditTextArea;
 import utils.jsyntax.JEditTextAreaWithMouseWheel;
 import utils.jsyntax.tokenmarker.HaskellTokenMarker;
-import utils.jsyntax.tokenmarker.LHSHaskellTokenMarker;
 
 import java.awt.Font;
 import java.awt.event.*;
-import javax.swing.KeyStroke;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 /**
  * Main window where code is displayed
  */
 public class EditorWindow {
   private static Logger log = Logger.getLogger("heat");
-  private static JEditTextArea jtaCodeView;
+  public static JEditTextArea jtaCodeView;
   private WindowManager wm = WindowManager.getInstance();
 
   /* If the document has been modified */
@@ -58,6 +59,9 @@ public class EditorWindow {
   private JMenuItem jMenuItemPaste = new JMenuItem("Paste");
   
   private boolean enabled = true;
+
+  private static Voice voice;
+  private static String text;
 
   /**
    * Creates a new EditorWindow object.
@@ -99,8 +103,9 @@ public class EditorWindow {
    *
    * @return the selected text, or empty string
    */
-  public String getSelectedText() {
-    return jtaCodeView.getSelectedText();
+  public static String getSelectedText() {
+     if (jtaCodeView != null){ return jtaCodeView.getSelectedText(); }
+     else return "";
   }
 
   /**
@@ -128,6 +133,41 @@ public class EditorWindow {
     log.warning("copy: " + getSelectedText());
     jtaCodeView.copy();
   }
+
+  public void speak() {
+
+      //Allocate voice
+      System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+      VoiceManager voiceManager = VoiceManager.getInstance();
+      voice = voiceManager.getVoice("kevin16");
+
+      if (voice != null) {
+          voice.allocate();
+      } else {
+          System.out.println("Voice not found.");
+      }
+
+      // Add caret listener to the text area
+
+
+      jtaCodeView.addCaretListener(new CaretListener() {
+          @Override
+          public void caretUpdate(CaretEvent e) {
+              if (jtaCodeView.getSelectedText() != null) {
+                  speakText(jtaCodeView.getSelectedText());
+              }
+          }}
+      );
+
+
+
+  }
+
+    private static void speakText(String text) {
+        if (voice != null) {
+            voice.speak(text);
+        }
+    }
 
   
   /**
@@ -212,8 +252,6 @@ public class EditorWindow {
           Settings.CODE_FONT_SIZE + " setting, check value in settings file");
       }
     }
-
-    
     jtaCodeView.setTokenMarker(new HaskellTokenMarker());
 
     //jtaCodeView.setPreferredSize(new Dimension(500, 200));
@@ -249,8 +287,6 @@ public class EditorWindow {
     jtaCodeView.setHorizontalScrollBarEnabled(enabled);
     setEnabled(false);
 }
- 
-
   /**
    * Changes the font size
    *
@@ -281,7 +317,7 @@ public class EditorWindow {
   public String getEditorContent() {
 	// A bit of a hack to remove spurious \r (without \n) that jtaCodeView may have wrongly inserted.
 	String newline = System.getProperty("line.separator");
-	String text = jtaCodeView.getText();
+	text = jtaCodeView.getText();
 	String withoutr = text.replaceAll("\r\n", "\n").replaceAll("\r", "");
 	return withoutr.replaceAll("\n", newline);
   }
@@ -294,6 +330,22 @@ public class EditorWindow {
   public static JEditTextArea getTextPane() {
     return jtaCodeView;
   }
-  
- 
+
+
+    private void voiceALlocation() {
+        System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+        VoiceManager voiceManager = VoiceManager.getInstance();
+        voice = voiceManager.getVoice("kevin16");
+
+        if (voice != null) {
+            voice.allocate();
+        } else {
+            System.out.println("Voice not found.");
+            return;
+        }
+
+        // Add caret listener to the text area
+;
+  }
 }
+

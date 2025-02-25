@@ -1,10 +1,9 @@
-package utils;
+package view.windows;
 
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
@@ -43,7 +42,7 @@ public class TextToSpeech {
 
             // Create the GUI
             JFrame frame = new JFrame("Highlight Text-to-Speech Demo");
-            JTextArea textArea = new JTextArea("Highlight any part of this text to hear it spoken.");
+            JTextArea textArea = new JTextArea();
             textArea.setLineWrap(true);
             textArea.setWrapStyleWord(true);
 

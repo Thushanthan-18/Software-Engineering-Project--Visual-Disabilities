@@ -13,17 +13,19 @@
 
 //import com.incors.plaf.alloy.AlloyLookAndFeel;
 
-import managers.FileManager;
 import managers.InterpreterManager;
 import managers.SettingsManager;
 import managers.WindowManager;
 import managers.UndoManager;
+import view.windows.EditorWindow;
+
+import javax.swing.*;
 import java.util.logging.Logger;
 import java.util.logging.FileHandler;
-import java.util.logging.Handler;
 import java.util.logging.SimpleFormatter;
-import java.util.logging.Level;
 import java.io.File;
+
+
 
 /**
  * Main HEAT class
@@ -50,10 +52,21 @@ public static void main(String[] args) {
 	  
     SettingsManager sm = SettingsManager.getInstance();
     WindowManager wm = WindowManager.getInstance();
+    EditorWindow ew = new EditorWindow();
 
     sm.loadSettings();
     WindowManager.setLookAndFeel();
     wm.createGUI();
+
+    JPopupMenu contextMenu = new JPopupMenu();
+
+    JMenuItem speakItem = new JMenuItem("Speak");
+
+    contextMenu.add(speakItem);
+
+
+    ew.speak();
+
 
     if (sm.isNewSettingsFile())
       wm.showWizardWindow();

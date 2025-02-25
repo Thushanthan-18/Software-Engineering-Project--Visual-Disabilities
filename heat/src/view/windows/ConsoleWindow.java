@@ -42,6 +42,14 @@ import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
+import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+
 
  /**
   * Window that displays the output from Interpreter
@@ -612,5 +620,11 @@ public class ConsoleWindow {
   public boolean isEnabled() {
 	  return enabled;
   }
-}
+
+
+
+
+ }
+
+
   

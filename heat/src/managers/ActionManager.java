@@ -17,11 +17,14 @@ package managers;
 
 import java.util.logging.Logger;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import utils.HaskellFilter;
 import utils.Resources;
 import utils.Settings;
 import utils.InterpreterParser;
 
+import utils.jsyntax.JEditTextArea;
 import view.dialogs.SystemDialogs;
 import view.windows.*;
 
@@ -35,6 +38,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
@@ -45,6 +50,8 @@ public class ActionManager {
   private static Logger log = Logger.getLogger("heat");
   private static ActionManager instance = null;
   private File selectedFile = null;
+  private static Voice voice;
+  private static JEditTextArea jtaCodeView;
 
   /* Static instantiation of our custom Actions */
   
@@ -428,6 +435,40 @@ public class ActionManager {
           }
 	}
   }
+
+    protected class TTSAction extends AbstractAction {
+        public TTSAction(String text, ImageIcon icon, String desc,
+                         Integer mnemonic, KeyStroke accelerator) {
+            super(text, icon);
+            putValue(SHORT_DESCRIPTION, desc);
+            putValue(MNEMONIC_KEY, mnemonic);
+            putValue(ACCELERATOR_KEY, accelerator);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+            VoiceManager voiceManager = VoiceManager.getInstance();
+            voice = voiceManager.getVoice("kevin16");
+
+            if (voice != null) {
+                voice.allocate();
+            } else {
+                System.out.println("Voice not found.");
+            }
+
+            // Add caret listener to the text area
+
+
+            EditorWindow.jtaCodeView.addCaretListener(new CaretListener() {
+                @Override
+                public void caretUpdate(CaretEvent e) {
+                    if (EditorWindow.jtaCodeView.getSelectedText() != null) {
+                        speakText(Editor.jtaCodeView.getSelectedText());
+                    }
+                }
+            }
+        }
+    }
   
   protected class ExitProgramAction extends AbstractAction {
     public ExitProgramAction(String text, ImageIcon icon, String desc,
