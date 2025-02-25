@@ -1,3 +1,5 @@
+
+/*
 package view.windows;
 
 import javax.swing.*;
@@ -103,3 +105,4 @@ public class SplashScreen extends JWindow {
         loader.execute();
     }
 }
+*/
