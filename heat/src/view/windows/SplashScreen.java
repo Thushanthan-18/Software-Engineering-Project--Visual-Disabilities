@@ -1,3 +1,5 @@
+package view.windows;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -11,14 +13,19 @@ public class SplashScreen extends JWindow {
 
     static class SplashSound {
         public static void play() {
-            Voice voice = VoiceManager.getInstance().getVoice(VOICE_NAME);
-            if (voice != null) {
-                voice.allocate();
-                voice.speak("HEAT IDE is starting");
-                voice.deallocate();
+
+            System.setProperty("freetts.voices",
+                    "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+            Voice voiceSplash = VoiceManager.getInstance().getVoice(VOICE_NAME);
+            if (voiceSplash != null) {
+                voiceSplash.allocate();
+                voiceSplash.speak("Welcome to HEAT");
+                voiceSplash.deallocate();
             } else {
                 System.err.println("Voice not found");
             }
+
+
         }
     }
 
@@ -34,9 +41,10 @@ public class SplashScreen extends JWindow {
         int y = (screen.height - height) / 5;
         setBounds(x, y, width, height);
 
-        JLabel label = new JLabel("HEAT IDE is launching", JLabel.CENTER);
+        JLabel label = new JLabel("Welcome to HEAT", JLabel.CENTER);
         label.setFont(new Font("SansSerif", Font.PLAIN, 24));
         content.add(label, BorderLayout.CENTER);
+
 
         progressBar = new JProgressBar(0, 100);
         progressBar.setStringPainted(true);
