@@ -57,8 +57,8 @@ public class ActionManager {
   
   // file/program actions
 
-    private TTSAction ttsAction = new TTSAction("TTS",
-            Resources.getIcon("exit16"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
+    private TTSAction tTSAction = new TTSAction("",
+            Resources.getIcon("SpeakOutloud"), "Text To speech", new Integer(KeyEvent.VK_Q),
             KeyStroke.getKeyStroke(KeyEvent.VK_Q, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private ExitProgramAction exitProgramAction = new ExitProgramAction("Quit",
       Resources.getIcon("exit16"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
@@ -210,7 +210,7 @@ public class ActionManager {
   }
 
   public ActionManager.TTSAction getTTSAction() {
-        return TTSAction;
+        return tTSAction;
     }
 
   public ActionManager.CloseFileAction getCloseFileAction() {
