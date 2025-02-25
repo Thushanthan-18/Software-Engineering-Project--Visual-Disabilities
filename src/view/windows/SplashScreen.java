@@ -1,9 +1,8 @@
-
-/*
 package view.windows;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.List;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
@@ -46,6 +45,30 @@ public class SplashScreen extends JWindow {
         JLabel label = new JLabel("Welcome to HEAT", JLabel.CENTER);
         label.setFont(new Font("SansSerif", Font.PLAIN, 24));
         content.add(label, BorderLayout.CENTER);
+
+        // Assuming you already defined width and height for the splash screen,
+// use new variable names for the image dimensions.
+        int splashWidth = width;
+        int splashHeight = height;
+
+// Load the PNG image from the Icons folder
+        URL imageURL = getClass().getResource("/Icons/splash.png");
+        if (imageURL == null) {
+            System.out.println("Image not found!");
+        } else {
+            System.out.println("Image URL: " + imageURL.toExternalForm());
+        }
+
+        ImageIcon originalIcon = new ImageIcon(imageURL);
+        Image originalImage = originalIcon.getImage();
+
+// Scale the image to match the splash screen's dimensions
+        Image scaledImage = originalImage.getScaledInstance(splashWidth, splashHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+// Create a JLabel to hold the scaled image and add it to the content pane
+        JLabel imageLabel = new JLabel(scaledIcon, JLabel.CENTER);
+        content.add(imageLabel, BorderLayout.CENTER);
 
 
         progressBar = new JProgressBar(0, 100);
@@ -105,4 +128,4 @@ public class SplashScreen extends JWindow {
         loader.execute();
     }
 }
-*/
+
