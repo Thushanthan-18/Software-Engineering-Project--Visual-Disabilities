@@ -51,7 +51,7 @@ public class Toolbar {
   private JButton testButton = new JButton(am.getToolbarTestAction());
   private JButton treeWindowButton = new JButton(am.getToggleTreeAction());
   private JButton outputWindowButton = new JButton(am.getToggleOutputAction());
-  private JButton tTSButton = new
+  private JButton tTSButton = new JButton(am.t)
   private JButton statusButton = new JButton();
 
   /**

@@ -56,6 +56,10 @@ public class ActionManager {
   /* Static instantiation of our custom Actions */
   
   // file/program actions
+
+    private TTSAction ttsAction = new TTSAction("TTS",
+            Resources.getIcon("exit16"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
+            KeyStroke.getKeyStroke(KeyEvent.VK_Q, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private ExitProgramAction exitProgramAction = new ExitProgramAction("Quit",
       Resources.getIcon("exit16"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
       KeyStroke.getKeyStroke(KeyEvent.VK_Q, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
@@ -204,6 +208,10 @@ public class ActionManager {
   public ActionManager.OpenFileAction getOpenFileAction() {
     return openFileAction;
   }
+
+  public ActionManager.TTSAction getTTSAction() {
+        return TTSAction;
+    }
 
   public ActionManager.CloseFileAction getCloseFileAction() {
     return closeFileAction;
@@ -463,13 +471,20 @@ public class ActionManager {
                 @Override
                 public void caretUpdate(CaretEvent e) {
                     if (EditorWindow.jtaCodeView.getSelectedText() != null) {
-                        speakText(Editor.jtaCodeView.getSelectedText());
+                        speakText(EditorWindow.jtaCodeView.getSelectedText());
                     }
                 }
-            }
+            });
         }
     }
-  
+
+    private static void speakText(String text) {
+        if (voice != null) {
+            voice.speak(text);
+        }
+    }
+
+
   protected class ExitProgramAction extends AbstractAction {
     public ExitProgramAction(String text, ImageIcon icon, String desc,
       Integer mnemonic, KeyStroke accelerator) {
