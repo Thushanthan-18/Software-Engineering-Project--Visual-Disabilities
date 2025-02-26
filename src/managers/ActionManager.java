@@ -63,29 +63,29 @@ public class ActionManager {
             Resources.getIcon("SpeakOutloud"), "Text To speech", new Integer(KeyEvent.VK_Q),
             KeyStroke.getKeyStroke(KeyEvent.VK_Q, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private ExitProgramAction exitProgramAction = new ExitProgramAction("Quit",
-      Resources.getIcon("exit16"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
+      Resources.getIcon("exitHC"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
       KeyStroke.getKeyStroke(KeyEvent.VK_Q, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private ExitProgramAction toolbarExitProgramAction = new ExitProgramAction(null,
-      Resources.getIcon("exit22"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
+      Resources.getIcon("exitHC"), "Quit HEAT", new Integer(KeyEvent.VK_Q),
       KeyStroke.getKeyStroke(KeyEvent.VK_Q, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private OpenFileAction openFileAction = new OpenFileAction("Open..",
-      Resources.getIcon("fileopen16"), "Open an existing or new file in the editor",
+      Resources.getIcon("fileopenHC"), "Open an existing or new file in the editor",
       new Integer(KeyEvent.VK_O),
       KeyStroke.getKeyStroke(KeyEvent.VK_O, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private OpenFileAction toolbarOpenFileAction = new OpenFileAction(null,
-      Resources.getIcon("fileopen22"), "Open an existing or new file in the editor",
+      Resources.getIcon("fileopenHC"), "Open an existing or new file in the editor",
       new Integer(KeyEvent.VK_O),
       KeyStroke.getKeyStroke(KeyEvent.VK_O, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private CloseFileAction closeFileAction = new CloseFileAction("Close",
-	      Resources.getIcon("fileclose16"), "Save file and close editor", null, null);
+	      Resources.getIcon("filecloseHC"), "Save file and close editor", null, null);
   private CloseFileAction toolbarCloseFileAction = new CloseFileAction(null,
-	      Resources.getIcon("fileclose22"), "Save file and close editor", null, null);
+	      Resources.getIcon("filecloseHC"), "Save file and close editor", null, null);
   private PrintFileAction printFileAction = new PrintFileAction("Print",
-		  Resources.getIcon("fileprint16"), "Print editor content or interpreter console",
+		  Resources.getIcon("fileprintHC"), "Print editor content or interpreter console",
 	      new Integer(KeyEvent.VK_P),
 	      KeyStroke.getKeyStroke(KeyEvent.VK_P, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
   private ShowOptionsAction showOptionsAction = new ShowOptionsAction("Options",
-	      Resources.getIcon("list16"), "Change HEAT Options",
+	      Resources.getIcon("listHC"), "Change HEAT Options",
 	      new Integer(KeyEvent.VK_D),
 	      KeyStroke.getKeyStroke(KeyEvent.VK_D, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
     // Magnifier action
