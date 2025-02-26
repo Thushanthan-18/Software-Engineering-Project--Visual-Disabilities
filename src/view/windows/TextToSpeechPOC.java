@@ -1,5 +1,8 @@
 package view.windows;
 
+
+/*Proof of Concept: IGNORE FILE*/
+
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -7,7 +10,7 @@ import javax.swing.event.CaretListener;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
-public class TextToSpeech {
+public class TextToSpeechPOC {
 /*
     public static void main(String[] args) {
         System.setProperty("freetts.voices",
