@@ -467,22 +467,20 @@ public class ActionManager {
             // Add caret listener to the text area
 
 
-            EditorWindow.jtaCodeView.addCaretListener(new CaretListener() {
-                @Override
-                public void caretUpdate(CaretEvent e) {
-                    if (EditorWindow.jtaCodeView.getSelectedText() != null) {
-                        speakText(EditorWindow.jtaCodeView.getSelectedText());
-                    }
-                }
-            });
+            if (EditorWindow.jtaCodeView.getSelectedText() != null) {
+                speakText(EditorWindow.jtaCodeView.getSelectedText());
+            }
         }
-    }
+    };
 
     private static void speakText(String text) {
         if (voice != null) {
             voice.speak(text);
         }
     }
+
+
+
 
 
   protected class ExitProgramAction extends AbstractAction {

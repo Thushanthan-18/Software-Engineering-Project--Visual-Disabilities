@@ -52,7 +52,7 @@ public static void main(String[] args) {
 	  
     SettingsManager sm = SettingsManager.getInstance();
     WindowManager wm = WindowManager.getInstance();
-    EditorWindow ew = new EditorWindow();
+     /* EditorWindow ew = new EditorWindow(); */
 
     sm.loadSettings();
     WindowManager.setLookAndFeel();
@@ -65,7 +65,7 @@ public static void main(String[] args) {
     contextMenu.add(speakItem);
 
 
-    ew.speak();
+    /* ew.speak(); */
 
 
     if (sm.isNewSettingsFile())

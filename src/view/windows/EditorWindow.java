@@ -134,6 +134,7 @@ public class EditorWindow {
     jtaCodeView.copy();
   }
 
+  /*
   public void speak() {
 
       //Allocate voice
@@ -169,7 +170,7 @@ public class EditorWindow {
         }
     }
 
-  
+ */
   /**
    * Pastes clipboard contents 
    */
