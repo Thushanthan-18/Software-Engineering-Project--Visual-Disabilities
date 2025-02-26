@@ -52,6 +52,7 @@ public class Toolbar {
   private JButton treeWindowButton = new JButton(am.getToggleTreeAction());
   private JButton outputWindowButton = new JButton(am.getToggleOutputAction());
   private JButton tTSButton = new JButton(am.getTTSAction());
+  private JButton magnifierButton = new JButton(am.getToolbarMagnifierAction());
   private JButton statusButton = new JButton();
 
   /**
@@ -90,6 +91,7 @@ public class Toolbar {
     toolBar.add(treeWindowButton);
     toolBar.add(outputWindowButton);
     toolBar.add(tTSButton);
+    toolBar.add(magnifierButton);
     toolBar.add(javax.swing.Box.createHorizontalGlue());
     toolBar.add(statusButton);
     statusButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));

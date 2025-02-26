@@ -30,6 +30,8 @@ import view.windows.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
 import java.io.File;
 
@@ -86,6 +88,14 @@ public class ActionManager {
 	      Resources.getIcon("list16"), "Change HEAT Options",
 	      new Integer(KeyEvent.VK_D),
 	      KeyStroke.getKeyStroke(KeyEvent.VK_D, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
+    // Magnifier action
+    private MagnifierAction toolbarMagniferAction = new MagnifierAction(
+            "",  // Text of the action
+            Resources.getIcon("magnifier22"),  // Icon representing the action
+            "Magnify the view",  // What action will do
+            null,  // No mnemonic key for mouse-triggered actions
+            null  // No accelerator for mouse-triggered actions.
+    );
 
   // editing actions
   private UndoAction undoAction = new UndoAction("Undo", Resources.getIcon("undo16"),
@@ -365,6 +375,10 @@ public class ActionManager {
   public ActionManager.GoToRecentConsoleHistory getGoToRecentConsoleHistory(){
 	  return goToRecentConsoleHistory;
   }
+
+  public ActionManager.MagnifierAction getToolbarMagnifierAction(){
+        return toolbarMagniferAction;
+    }
 
     /* The Action SubClasses Follow  */
   /*
@@ -665,6 +679,27 @@ public class ActionManager {
         saveAsFileAction.actionPerformed(e);
     }
   }  end SaveFileAction */
+
+
+    //
+    public class MagnifierAction extends AbstractAction {
+
+
+        public MagnifierAction(String text, ImageIcon icon, String desc,
+                               Integer mnemonic, KeyStroke accelerator) {
+            super(text, icon);
+            putValue(SHORT_DESCRIPTION, desc);
+            putValue(MNEMONIC_KEY, mnemonic);
+            putValue(ACCELERATOR_KEY, accelerator);
+        }
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MagnifierManager mm = new MagnifierManager();
+            mm.execute();
+        }
+    }
   
   /**
    * SendEvaluationAction is called whenever Enter is keyed in the 
