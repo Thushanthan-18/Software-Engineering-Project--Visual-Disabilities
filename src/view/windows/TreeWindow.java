@@ -439,7 +439,7 @@ public class TreeWindow
               	.get(tests.indexOf(test))).getState()));
             }
             else
-              setIcon(Resources.getIcon("module16"));
+              setIcon(Resources.getIcon("moduleHC"));
           }
           if (leaf && isParsedType(object)) {
             ParsedType type = (ParsedType)object;
