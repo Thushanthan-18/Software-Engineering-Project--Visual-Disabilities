@@ -7,7 +7,7 @@ import java.util.List;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
-// Inner class for audible confirmation
+// // Nested class to handle audible feedback
 public class SplashScreen extends JWindow {
     private static final String VOICE_NAME = "kevin16";
     private JProgressBar progressBar;
@@ -46,12 +46,11 @@ public class SplashScreen extends JWindow {
         label.setFont(new Font("SansSerif", Font.PLAIN, 24));
         content.add(label, BorderLayout.CENTER);
 
-        // Assuming you already defined width and height for the splash screen,
-// use new variable names for the image dimensions.
+// Dimensions of the images
         int splashWidth = width;
         int splashHeight = height;
 
-// Load the PNG image from the Icons folder
+// PNG image from Icon Folders
         URL imageURL = getClass().getResource("/Icons/splash.png");
         if (imageURL == null) {
             System.out.println("Image not found!");
@@ -62,11 +61,11 @@ public class SplashScreen extends JWindow {
         ImageIcon originalIcon = new ImageIcon(imageURL);
         Image originalImage = originalIcon.getImage();
 
-// Scale the image to match the splash screen's dimensions
+// // Adjust the image size to fit the dimensions of the splash screen
         Image scaledImage = originalImage.getScaledInstance(splashWidth, splashHeight, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-// Create a JLabel to hold the scaled image and add it to the content pane
+// Creates a JLabel which would hold the scaled image and add it to the content pane
         JLabel imageLabel = new JLabel(scaledIcon, JLabel.CENTER);
         content.add(imageLabel, BorderLayout.CENTER);
 
@@ -93,7 +92,7 @@ public class SplashScreen extends JWindow {
         // Play TTS in a separate thread
         new Thread(SplashSound::play).start();
 
-        // Use SwingWorker to simulate loading tasks and update progress
+        // Implement SwingWorker to handle loading tasks and provide progress updates
         SwingWorker<Void, Integer> loader = new SwingWorker<Void, Integer>() {
             @Override
             protected Void doInBackground() throws Exception {
