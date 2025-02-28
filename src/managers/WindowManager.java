@@ -1,8 +1,7 @@
 /**
- *
  * Copyright (c) 2005 University of Kent
  * Computing Laboratory, Canterbury, Kent, CT2 7NP, U.K
- *
+ * <p>
  * This software is the confidential and proprietary information of the
  * Computing Laboratory of the University of Kent ("Confidential Information").
  * You shall not disclose such confidential Information and shall use it only
@@ -10,48 +9,31 @@
  * the University.
  *
  * @author Dean Ashton, Sergei Krot
- *
  */
 
 package managers;
 
-import java.awt.BorderLayout;
-import java.awt.Image;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.logging.Logger;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.JOptionPane;
-import java.awt.Dimension;
-
 import utils.Resources;
 import view.toolbars.MainMenu;
 import view.toolbars.Toolbar;
-import view.windows.AboutWindow;
-import view.windows.EditorWindow;
-import view.windows.HelpWindow;
-import view.windows.OptionsWindow;
-import view.windows.ConsoleWindow;
-import view.windows.PrintWindow;
-import view.windows.SearchDialog;
-import view.windows.WizardWindow;
-import view.windows.TreeWindow;
-import java.awt.Font;
+import view.windows.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.logging.Logger;
 
 
 /**
  * The manager class responsible for all GUI components
  */
 public class WindowManager {
-    private static Logger log = Logger.getLogger("heat");
+    private static final Logger log = Logger.getLogger("heat");
     private static WindowManager instance = null;
 
     /* for use in main screen  */
+    private int mode;
     private JFrame mainScreenFrame;
     private JSplitPane jSplitMain;
     private JSplitPane jSplitTree;
@@ -97,15 +79,6 @@ public class WindowManager {
 
     public void restoreStatus() {
         setStatus(savedStatus);
-    }
-
-    public void applyUIFont() {
-        Font uiFont = new Font("Arial", Font.BOLD, 18); // Adjust size as needed
-        UIManager.put("Menu.font", uiFont);
-        UIManager.put("MenuItem.font", uiFont);
-        UIManager.put("Button.font", uiFont);
-        UIManager.put("Label.font", uiFont);
-        UIManager.put("ToolBar.font", uiFont);
     }
 
     private void setStatus(int status) {
@@ -328,12 +301,13 @@ public class WindowManager {
     public SearchDialog getSearchWindow() {
         return searchWindow;
     }
+
     /**
      * Returns the {@link TreeWindow} used in GUI
      *
      *@return the {@link TreeWindow} object from GUI
      */
-    public TreeWindow getTreeWindow(){
+    public TreeWindow getTreeWindow() {
         return treeWindow;
     }
 
@@ -342,15 +316,7 @@ public class WindowManager {
      */
     public void createGUI() {
 
-        // Set global UI fonts
-        Font globalFont = new Font("Arial", Font.BOLD, 20);
-        UIManager.put("Menu.font", globalFont);
-        UIManager.put("MenuItem.font", globalFont);
-        UIManager.put("Button.font", globalFont);
-        UIManager.put("ToolBar.font", globalFont);
-        UIManager.put("Label.font", globalFont);
-
-        if (mainScreenFrame!=null)
+        if (mainScreenFrame != null)
             mainScreenFrame.setVisible(false);
         mainScreenFrame = new JFrame();
         mainScreenFrame.setTitle("HEAT - Haskell Educational Advancement Tool");
@@ -371,7 +337,7 @@ public class WindowManager {
         treeWindow = new TreeWindow();
 
         mainMenu = new MainMenu();
-        toolbar = new Toolbar();
+        toolbar = new Toolbar(mode);
 
         /* setup main container components */
         // JPanel mainScreenPanel = new JPanel();
@@ -381,7 +347,7 @@ public class WindowManager {
         jSplitTree = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 treeWindow.getWindowPanel(), jSplitMain);
 
-        displayWindow.getJTextPane().setMinimumSize(new Dimension(200,0));
+        displayWindow.getJTextPane().setMinimumSize(new Dimension(200, 0));
         jSplitMain.setResizeWeight(0.6);
 
         jSplitMain.setOneTouchExpandable(true);
@@ -393,7 +359,7 @@ public class WindowManager {
             mainScreenFrame.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     JButton jb = new JButton();
-                    jb.setAction(ActionManager.getInstance().getExitProgramAction());
+                    jb.setAction(ActionManagerAccessibility.getInstance().getExitProgramAction());
                     jb.doClick();
                 }
             });
@@ -418,8 +384,8 @@ public class WindowManager {
             /* add splitpane and evaluation window to main frame */
             mainScreenFrame.getContentPane().add(jSplitTree, BorderLayout.CENTER);
 
-            mainScreenFrame.setMinimumSize(new Dimension(550,300));
-            mainScreenFrame.setSize(620,400);
+            mainScreenFrame.setMinimumSize(new Dimension(550, 300));
+            mainScreenFrame.setSize(620, 400);
             mainScreenFrame.pack();
             // java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
             // mainScreenFrame.setSize(java.lang.Math.min(screenSize.width,800)-20,
@@ -435,8 +401,6 @@ public class WindowManager {
             e.printStackTrace();
         }
     }
-
-    //applyUIFont();
 
     /* show the main frame */
     public void setVisible() {
@@ -462,8 +426,7 @@ public class WindowManager {
     /**
      *  Resize the tree window so it can't be seen
      */
-    public void hideTree()
-    {
+    public void hideTree() {
         jSplitTree.setDividerLocation(jSplitTree.getInsets().left);
         //   if (jSplitTree.getDividerLocation() != jSplitTree.getMinimumDividerLocation())
         //       jSplitTree.setDividerLocation(jSplitTree.getMinimumDividerLocation());
@@ -472,8 +435,7 @@ public class WindowManager {
     /**
      * Resets the Tree window to default size
      */
-    public void showTree()
-    {
+    public void showTree() {
         jSplitTree.setDividerLocation(jSplitTree.getInsets().left +
                 jSplitTree.getLeftComponent().getPreferredSize().width);
 
@@ -487,8 +449,7 @@ public class WindowManager {
     /**
      *  Show/Hide Tree Window
      */
-    public void toggleTree()
-    {
+    public void toggleTree() {
         if (jSplitTree.getDividerLocation() > jSplitTree.getMinimumDividerLocation())
             hideTree();
         else
@@ -498,8 +459,7 @@ public class WindowManager {
     /**
      *  Hide interpreter output window and show editor full size
      */
-    public void hideOutput()
-    {
+    public void hideOutput() {
         log.info("hideOutput");
         jSplitMain.setDividerLocation(jSplitMain.getSize().height -
                 jSplitMain.getInsets().bottom -
@@ -511,11 +471,10 @@ public class WindowManager {
     /**
      *  Show interpreter output window
      */
-    public void showOutput()
-    {
+    public void showOutput() {
         log.info("showOutput");
         jSplitMain.setDividerLocation(0.6);
-        // jSplitMain.setDividerLocation(jSplitTree.getInsets().top +
+        // jSplitMain.setDividerLocation(jSplitTree.getInsets().top + 
         //        jSplitMain.getTopComponent().getPreferredSize().height);
 
         //if (jSplitMain.getDividerLocation() >= jSplitMain.getMaximumDividerLocation()) // if its closed
@@ -530,8 +489,7 @@ public class WindowManager {
     /**
      *  Show/Hide interpreter output window
      */
-    public void toggleConsole()
-    {
+    public void toggleConsole() {
         int max = jSplitMain.getSize().height - jSplitMain.getInsets().bottom -
                 jSplitMain.getDividerSize();
         if (jSplitMain.getDividerLocation() < max) {
@@ -568,7 +526,7 @@ public class WindowManager {
     }
 
     /**
-     * Displays the {@link SearchWindow}
+     * Displays the {@link SearchDialog}
      */
     public void showSearchWindow() {
         getSearchWindow().show();
@@ -627,7 +585,7 @@ public class WindowManager {
     public void copySelected() {
         /* Using the isFocused methods doesn't work, so I'm just doing a
          * getSelectedText to decide in what window the selection lies */
-        String displayWinSelected = displayWindow.getSelectedText();
+        String displayWinSelected = EditorWindow.getSelectedText();
         String outputWinSelected = consoleWindow.getSelectedText();
 
         if ((displayWinSelected != null) && !displayWinSelected.equals(""))
@@ -656,16 +614,20 @@ public class WindowManager {
         }
     }
 
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
     /**
      * Sets the filename to display in HEAT titlebar
      *
      * @param fileName the filename to display in titlebar
      */
     public void setTitleFileName(String fileName) {
-        if(fileName == null || fileName.trim().equals(""))
+        if (fileName == null || fileName.trim().equals(""))
             getMainScreenFrame().setTitle("HEAT - Haskell Educational Advancement Tool");
         else
-            getMainScreenFrame().setTitle("HEAT - "+fileName);
+            getMainScreenFrame().setTitle("HEAT - " + fileName);
     }
 
 
@@ -675,7 +637,7 @@ public class WindowManager {
 
         if (!fm.openFile(file)) {
             JOptionPane.showMessageDialog(mainScreenFrame,
-                    "Error creating new file "+file.getAbsolutePath(),
+                    "Error creating new file " + file.getAbsolutePath(),
                     "File Creation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -691,7 +653,8 @@ public class WindowManager {
         // fm.saveTemporary();
         setStatusUncompiled();
         //  refresh tree window
-        ParserManager.getInstance().refresh();
+        ParserManager.getInstance();
+        ParserManager.refresh();
         getTreeWindow().refreshTree();
         //  and display updated treeWindow
         showAll();

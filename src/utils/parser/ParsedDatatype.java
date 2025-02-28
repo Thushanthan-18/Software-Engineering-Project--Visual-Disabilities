@@ -11,54 +11,50 @@ package utils.parser;
  */
 public class ParsedDatatype extends ParsedComponent {
 
-    private String value;
+    private final String value;
 
     /**
-     *  Creates a new instance of ParsedDatatype.
+     * Creates a new instance of ParsedDatatype.
      *
-     *  @param String name Name of the item
-     *  @param String value Value of the item
-     *  @param int location line number of the current item
+     * @param String name Name of the item
+     * @param String value Value of the item
+     * @param int    location line number of the current item
      */
-    public ParsedDatatype(String name, String value, int location )
-    {
+    public ParsedDatatype(String name, String value, int location) {
         super(name, location);
         this.value = value;
-     
+
     }
-    
+
     /**
-     *  Creates a new instance of ParsedDatatype.
-     *  In this alternative constructor a comment for current item can be specified
+     * Creates a new instance of ParsedDatatype.
+     * In this alternative constructor a comment for current item can be specified
      *
-     *  @param String name Name of the item
-     *  @param String value Value of the item
-     *  @param int location line number of the current item
+     * @param String name Name of the item
+     * @param String value Value of the item
+     * @param int    location line number of the current item
      */
-    public ParsedDatatype(String name, String value, int location, String comment )
-    {
+    public ParsedDatatype(String name, String value, int location, String comment) {
         super(name, location, comment);
         this.value = value;
     }
 
     /**
-     *  Return value of the current item
+     * Return value of the current item
      *
-     *  @return String value
+     * @return String value
      */
-    public String getValue()
-    {
-        return value;    
+    public String getValue() {
+        return value;
     }
 
     /**
-     *  Set value of the current item
+     * Set value of the current item
      *
-     *  @param String value
+     * @param String value
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         value = value;
     }
- 
+
 }

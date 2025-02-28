@@ -3,12 +3,12 @@ package view.windows;
 
 /*Proof of Concept: IGNORE FILE*/
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
 
 public class TextToSpeechPOC {
 /*
@@ -27,47 +27,47 @@ public class TextToSpeechPOC {
         }
   */
 
-        private static Voice voice;
+    private static Voice voice;
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
 
-            System.setProperty("freetts.voices",
-                    "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+        System.setProperty("freetts.voices",
+                "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 
-            VoiceManager voiceManager = VoiceManager.getInstance();
-            voice = voiceManager.getVoice("kevin16");
-            if (voice != null) {
-                voice.allocate();
-            } else {
-                System.out.println("Voice not found.");
-                return;
-            }
-
-            // Create the GUI
-            JFrame frame = new JFrame("Highlight Text-to-Speech Demo");
-            JTextArea textArea = new JTextArea();
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(true);
-
-            // Add caret listener to the text area
-            textArea.addCaretListener(new CaretListener() {
-                @Override
-                public void caretUpdate(CaretEvent e) {
-                    if (textArea.getSelectedText() != null) {
-                        speakText(textArea.getSelectedText());
-                    }
-                }
-            });
-
-            frame.getContentPane().add(new JScrollPane(textArea));
-            frame.setSize(400, 200);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setVisible(true);
+        VoiceManager voiceManager = VoiceManager.getInstance();
+        voice = voiceManager.getVoice("kevin16");
+        if (voice != null) {
+            voice.allocate();
+        } else {
+            System.out.println("Voice not found.");
+            return;
         }
+
+        // Create the GUI
+        JFrame frame = new JFrame("Highlight Text-to-Speech Demo");
+        JTextArea textArea = new JTextArea();
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+
+        // Add caret listener to the text area
+        textArea.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                if (textArea.getSelectedText() != null) {
+                    speakText(textArea.getSelectedText());
+                }
+            }
+        });
+
+        frame.getContentPane().add(new JScrollPane(textArea));
+        frame.setSize(400, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
 
     private static void speakText(String text) {
         if (voice != null) {
             voice.speak(text);
         }
     }
-    }
+}

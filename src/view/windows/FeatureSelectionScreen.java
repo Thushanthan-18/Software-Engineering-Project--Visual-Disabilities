@@ -2,11 +2,19 @@ package view.windows;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FeatureSelectionScreen extends JFrame {
+    private int mode = 0;
+
+    public int getMode() {
+        return mode;
+    }
+
     public FeatureSelectionScreen() {
         setTitle("HEAT IDE - Accessibility Features");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(1, 2, 20, 20)); // Two sections for buttons
@@ -25,10 +33,10 @@ public class FeatureSelectionScreen extends JFrame {
         normalPanel.setLayout(new BoxLayout(normalPanel, BoxLayout.Y_AXIS)); // Stack components vertically
         normalPanel.setBackground(Color.WHITE);
 
-        JLabel normalImages = new JLabel(logo1); // Display first image
+        JLabel normalImages = new JLabel(logo1);
         normalImages.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton normalButton = new JButton("Normal Version");
+        JButton normalButton = new JButton("Default Mode");
         normalButton.setFont(buttonFont);
         normalButton.setForeground(buttonTextColor);
         normalButton.setBackground(buttonBackgroundColor);
@@ -36,11 +44,11 @@ public class FeatureSelectionScreen extends JFrame {
         normalButton.setToolTipText("Launch the normal version of HEAT IDE");
         normalButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        normalPanel.add(Box.createVerticalGlue()); // Push content to center
+        normalPanel.add(Box.createVerticalGlue());
         normalPanel.add(normalImages);
-        normalPanel.add(Box.createVerticalStrut(10)); // Add space
+        normalPanel.add(Box.createVerticalStrut(10));
         normalPanel.add(normalButton);
-        normalPanel.add(Box.createVerticalGlue()); // Push content to center
+        normalPanel.add(Box.createVerticalGlue());
 
         // ---- Visual Impaired Mode ----
         JPanel impairedPanel = new JPanel();
@@ -50,7 +58,7 @@ public class FeatureSelectionScreen extends JFrame {
         JLabel impairedImages = new JLabel(logo2);
         impairedImages.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton impairedButton = new JButton("Visual Impaired Mode");
+        JButton impairedButton = new JButton("Accessibility Mode");
         impairedButton.setFont(buttonFont);
         impairedButton.setForeground(buttonTextColor);
         impairedButton.setBackground(buttonBackgroundColor);
@@ -67,12 +75,63 @@ public class FeatureSelectionScreen extends JFrame {
         // Add panels to frame
         add(normalPanel);
         add(impairedPanel);
+
+        // Add action listeners
+        normalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mode = 0;
+                dispose();
+                //launchNormalMode(); // not needed
+            }
+        });
+
+        impairedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mode = 1;
+                dispose();
+                //launchImpairedMode(); // not needed
+            }
+        });
     }
 
+    /**
+     * Launches Normal Mode (OG IDE) using NormalModeLauncher
+     */
+    private void launchNormalMode() {
+        try {
+            System.out.println("Launching Normal Mode...");
+            ProcessBuilder pb = new ProcessBuilder("java", "-cp", "bin", "src.NormalModeLauncher");
+            pb.start();
+            dispose(); // Close the feature selection screen
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to launch Normal Mode", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Launches Visual Impaired Mode (Existing mode)
+     */
+    private void launchImpairedMode() {
+        try {
+            System.out.println("Launching Visual Impaired Mode...");
+            ProcessBuilder pb = new ProcessBuilder("java", "-cp", "bin", "src.Main");
+            pb.start();
+            dispose(); // Close the feature selection screen
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to launch Visual Impaired Mode", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+/*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             FeatureSelectionScreen screen = new FeatureSelectionScreen();
             screen.setVisible(true);
         });
     }
+
+ */
 }

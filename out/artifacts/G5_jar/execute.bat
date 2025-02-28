@@ -1,0 +1,1 @@
+java -jar G5.jar

@@ -1,23 +1,37 @@
+/**
+ * Copyright (c) 2005 University of Kent
+ * Computing Laboratory, Canterbury, Kent, CT2 7NP, U.K
+ * <p>
+ * This software is the confidential and proprietary information of the
+ * Computing Laboratory of the University of Kent ("Confidential Information").
+ * You shall not disclose such   Information and shall use it only
+ * in accordance with the terms of the license agreement you entered into with
+ * the University.
+ */
+
+package view.windows; // Ensure this matches the package of FeatureSelectionScreen
+
+//import com.incors.plaf.alloy.AlloyLookAndFeel;
+
 import managers.InterpreterManager;
 import managers.SettingsManager;
-import managers.WindowManager;
 import managers.UndoManager;
-import view.windows.EditorWindow;
-import view.windows.SplashScreen;
-import view.windows.FeatureSelectionScreen;
+import managers.WindowManager;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.logging.Logger;
-import java.util.logging.FileHandler;
-import java.util.logging.SimpleFormatter;
 import java.io.File;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Main HEAT class
  */
 public class Main {
+    private static int mode;
+
     public static void main(String[] args) {
+        System.out.println("✅ NormalModeLauncher is running!");
         // Create and show the splash screen
         SplashScreen splash = new SplashScreen(); // Create splash screen
 
@@ -50,6 +64,7 @@ public class Main {
                     featureSelectionScreen.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                            mode = featureSelectionScreen.getMode();
                             System.out.println("FeatureSelectionScreen closed. Running HEAT IDE...");
                             runHEAT(args);  // Call runHEAT when FeatureSelectionScreen is closed
                         }
@@ -84,12 +99,13 @@ public class Main {
 
         sm.loadSettings();
         WindowManager.setLookAndFeel();
+        wm.setMode(mode);
         wm.createGUI();
 
         JPopupMenu contextMenu = new JPopupMenu();
         JMenuItem speakItem = new JMenuItem("Speak");
         contextMenu.add(speakItem);
-       // ew.speak();
+        // ew.speak();
 
         if (sm.isNewSettingsFile()) {
             wm.showWizardWindow();

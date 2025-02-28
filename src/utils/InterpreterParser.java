@@ -1,8 +1,7 @@
 /**
- *
  * Copyright (c) 2005 University of Kent
  * Computing Laboratory, Canterbury, Kent, CT2 7NP, U.K
- *
+ * <p>
  * This software is the confidential and proprietary information of the
  * Computing Laboratory of the University of Kent ("Confidential Information").
  * You shall not disclose such confidential Information and shall use it only
@@ -10,135 +9,121 @@
  * the University.
  *
  * @author Chris Olive
- *
  */
 
 package utils;
 
 import managers.InterpreterManager;
-import managers.FileManager;
 import managers.ParserManager;
 import managers.SettingsManager;
 import managers.WindowManager;
-
-// import org.jdom.*;
-// import org.jdom.input.SAXBuilder;
-import java.util.logging.Logger;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.lang.*;
-
-import java.util.*;
-
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-
 import utils.parser.ParsedTest;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Takes output from Hugs and checks it for error
  * messages. Will NOT function properly on other interpreter output.
  */
 public class InterpreterParser {
-  SettingsManager sm = SettingsManager.getInstance();
-  private static InterpreterParser instance = null;
-  private final String HUGS_ERROR = "ERROR";
-  private final String HUGS_ERROR_EXPLANATION = "***";
-  private final String OK = "Type :?";
-  private String ERROR_SEPERATOR = "-";
-  private String LINENUMBER_SPLIT = ":";
-  private String errorDescription;
-  private String bufferedLine = "";
+    SettingsManager sm = SettingsManager.getInstance();
+    private static InterpreterParser instance = null;
+    private final String HUGS_ERROR = "ERROR";
+    private final String HUGS_ERROR_EXPLANATION = "***";
+    private final String OK = "Type :?";
+    private final String ERROR_SEPERATOR = "-";
+    private final String LINENUMBER_SPLIT = ":";
+    private String errorDescription;
+    private final String bufferedLine = "";
     // private org.jdom.Document doc;
-  private boolean xmlChecked = false;
-  private boolean xmlBroken = false;
-  private boolean match = false;
-  private int errorFound = 0;
-  private String propEval="";
-  private String line = "";
-  private int charsRead=0;
-  private boolean errorNo;
-  private int charCount = 0;
-  
-  private String lineNumber = "";
-  private int lineNum;
-  private WindowManager wm = WindowManager.getInstance();
-  private InterpreterManager im = InterpreterManager.getInstance();
-  private static Logger log = Logger.getLogger("heat");
-  // to provide way to interpret test output
-  private String currentDebugEval = ""; 
-  protected InterpreterParser() {
-    /* Exists to prevent instantiation */
-  }
-  
-  /**
-   * Get an instance of an InterpreterParser
-   * @return The current or a new instance if one is not running
-   */
-  public static InterpreterParser getInstance() {
-    if (instance == null)
-      instance = new InterpreterParser();
-    return instance;
-  }
-  
+    private final boolean xmlChecked = false;
+    private final boolean xmlBroken = false;
+    private final boolean match = false;
+    private int errorFound = 0;
+    private final String propEval = "";
+    private final String line = "";
+    private final int charsRead = 0;
+    private boolean errorNo;
+    private final int charCount = 0;
+
+    private final String lineNumber = "";
+    private int lineNum;
+    private final WindowManager wm = WindowManager.getInstance();
+    private final InterpreterManager im = InterpreterManager.getInstance();
+    private static final Logger log = Logger.getLogger("heat");
+    // to provide way to interpret test output
+    private String currentDebugEval = "";
+
+    protected InterpreterParser() {
+        /* Exists to prevent instantiation */
+    }
+
+    /**
+     * Get an instance of an InterpreterParser
+     * @return The current or a new instance if one is not running
+     */
+    public static InterpreterParser getInstance() {
+        if (instance == null)
+            instance = new InterpreterParser();
+        return instance;
+    }
+
     /**
      * Checks the output with expected results for the properties. 
-     * 
+     *
      * @param String output The array of strings with containing the results of the properties.
      * @param int How many results have been collected.
      */
-   public void parseTestResults(String []output, int countResult){
-	    ArrayList tests=ParserManager.getInstance().getParser().getTests();
-	    for (int i=0;i<countResult;i++){
-	      if (tests.size()>0){
-            String myResult = output[i].trim();
-            if (!myResult.contains("ERROR") 
-                && !myResult.contains("Program error") 
-                && myResult.contains("True"))
-            {
+    public void parseTestResults(String[] output, int countResult) {
+        ParserManager.getInstance();
+        ArrayList<ParsedTest> tests = ParserManager.getParser().getTests();
+        for (int i = 0; i < countResult; i++) {
+            if (tests.size() > 0) {
+                String myResult = output[i].trim();
+                if (!myResult.contains("ERROR")
+                        && !myResult.contains("Program error")
+                        && myResult.contains("True")) {
             /*TutorialWindow.changeText("<h3>TEST RESULT: <span style=\"color: green\">PASSED</span></h3>Test: <b>" + currentTest.getName() + "</b><br>Expected: <b style=\"color:green\">" + currentTest.getName() + "</b><br>Result: <b style=\"color:green\">" + myResult + "</b>");
             wm.showTutorial();*/
-            ((ParsedTest) ParserManager.getInstance().getParser().getTests()
-              .get(i)).setState("testPassed");
-            
-            } else {
-            // check if parser produced an error
-              if(myResult.startsWith("ERROR") || myResult.startsWith("Program error"))
-              {
-                myResult = "Syntax error in the test line";
-              }
-              ((ParsedTest) ParserManager.getInstance().getParser().getTests()
-                .get(i)).setState("testFailed");
+                    ParserManager.getInstance();
+                    ParserManager.getParser().getTests()
+                            .get(i).setState("testPassed");
+
+                } else {
+                    // check if parser produced an error
+                    if (myResult.startsWith("ERROR") || myResult.startsWith("Program error")) {
+                        myResult = "Syntax error in the test line";
+                    }
+                    ParserManager.getInstance();
+                    ParserManager.getParser().getTests()
+                            .get(i).setState("testFailed");
               /*TutorialWindow.changeText("<h3>TEST RESULT: <span style=\"color: red\">FAILED</span></h3>Test: <b>" + currentTest.getName() + "</b><br>Expected: <b style=\"color:green\">" + currentTest.getName() + "</b><br>Result: <b style=\"color:red\">" + myResult + "</b>");
               wm.showTutorial();*/
+                }
             }
-          }
-	    }
+        }
         // parse the rest of the output as normal
     }
-  
-  public void setCurrentDebugEvaluation(String eval)
-  {
-      currentDebugEval = eval;
-  }
-  
-  public void setErrorStatus(int status)
-  {
-      errorFound = status;
-  }
-  
-  /**
-   * Main method that parses the output from the interpreter. This checks for 
-   * the known error text within the String and if found looks up a definition 
-   * for this in the xml error file.
-   *
-   * Most of this method is now pointless. However, it still finds the
-   * error location within the error message.
-   * 
-   * @param output The String (from the interpreter) to be parsed.
-   */
+
+    public void setCurrentDebugEvaluation(String eval) {
+        currentDebugEval = eval;
+    }
+
+    public void setErrorStatus(int status) {
+        errorFound = status;
+    }
+
+    /**
+     * Main method that parses the output from the interpreter. This checks for
+     * the known error text within the String and if found looks up a definition
+     * for this in the xml error file.
+     *
+     * Most of this method is now pointless. However, it still finds the
+     * error location within the error message.
+     *
+     * @param output The String (from the interpreter) to be parsed.
+     */
   /*
   public void parseOutput(String output) {
     if ((output == null) || output.trim().equals(""))
@@ -255,11 +240,11 @@ public class InterpreterParser {
     wm.getOutputWindow().outputNormal(output + lineBreak);
   }
   */
-  
-  /**
-   * Parses a character at a time to retrieve the line number.
-   * @param letter The input (int) character to parse.
-   */
+
+    /**
+     * Parses a character at a time to retrieve the line number.
+     * @param letter The input (int) character to parse.
+     */
   /*
   public void parseChars(int letter) {
 	wm.getEvaluationWindow().setCompileStatus(1);	
@@ -350,40 +335,40 @@ public class InterpreterParser {
     }
     
   }
-*/  
+*/
 
-/**
-   * Removes the '_' and "NEWLINE" defined in the xml file (for space and 
-   * newlines) and replaces them
-   * 
-   * @param s The String to be formatted
-   * @return The formatted String
-   */
-  public String trimAndSpace(String s) {
-    s = s.replaceAll("NEWLINE", "<br>");
-    s = s.replaceAll("_", " ");
-    return s;
-  }
-  
-  /**
-   * Return the error found status
-   * @return True if an error is found, false otherwise
-   */
-  public int getErrorStatus() {
-    return errorFound;
-  }
-  
-  /**
-   * Gets the line number an error has been reported on
-   * @return The line number
-   */
-  public int getErrorLine() {
-    return lineNum;
-  }
+    /**
+     * Removes the '_' and "NEWLINE" defined in the xml file (for space and
+     * newlines) and replaces them
+     *
+     * @param s The String to be formatted
+     * @return The formatted String
+     */
+    public String trimAndSpace(String s) {
+        s = s.replaceAll("NEWLINE", "<br>");
+        s = s.replaceAll("_", " ");
+        return s;
+    }
 
-  /**
-   * Checks that the xml error file exists and can be loaded
-   */
+    /**
+     * Return the error found status
+     * @return True if an error is found, false otherwise
+     */
+    public int getErrorStatus() {
+        return errorFound;
+    }
+
+    /**
+     * Gets the line number an error has been reported on
+     * @return The line number
+     */
+    public int getErrorLine() {
+        return lineNum;
+    }
+
+    /**
+     * Checks that the xml error file exists and can be loaded
+     */
   /*
   public void checkXML() {
     String sep = System.getProperty("file.separator");
@@ -413,8 +398,7 @@ public class InterpreterParser {
     }
   }
    */
-  
-  public void setErrorNo(boolean b){
-	  errorNo = b;
-  }
+    public void setErrorNo(boolean b) {
+        errorNo = b;
+    }
 }

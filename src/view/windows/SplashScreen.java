@@ -1,16 +1,16 @@
 package view.windows;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.List;
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
 
 // // Nested class to handle audible feedback
 public class SplashScreen extends JWindow {
     private static final String VOICE_NAME = "kevin16";
-    private JProgressBar progressBar;
+    private final JProgressBar progressBar;
 
     static class SplashSound {
         public static void play() {
@@ -51,7 +51,7 @@ public class SplashScreen extends JWindow {
         int splashHeight = height;
 
 // PNG image from Icon Folders
-        URL imageURL = getClass().getResource("/Icons/splash.png");
+        URL imageURL = getClass().getResource("/icons/splash.png");
         if (imageURL == null) {
             System.out.println("Image not found!");
         } else {
@@ -85,7 +85,8 @@ public class SplashScreen extends JWindow {
         setVisible(false);
         dispose();
     }
-
+}
+    /*
     public static void main(String[] args) {
         SplashScreen splash = new SplashScreen();
 
@@ -126,5 +127,7 @@ public class SplashScreen extends JWindow {
 
         loader.execute();
     }
-}
 
+
+}
+*/
