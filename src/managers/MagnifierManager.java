@@ -12,12 +12,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+/**
+ * The manager Class responsible for creating new magnifier instance(object).
+ * configuration and interface(mouse) logic is specified to get concurrent thread, for magnification.
+ */
+
 public class MagnifierManager extends JFrame implements Runnable {
     private Robot robot;
     private JLabel magnifiedView;
     public MagnifierManager() {
         super("Magnifying Tool");
-        setSize(600, 600);//set size
+        setSize(500, 500);//set size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         magnifiedView = new JLabel();
         add(magnifiedView);
@@ -33,7 +38,7 @@ public class MagnifierManager extends JFrame implements Runnable {
             Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
             Rectangle captureRect = new Rectangle(mouseLocation.x - 30, mouseLocation.y - 100, 200, 200);
             BufferedImage capture = robot.createScreenCapture(captureRect);
-            ImageIcon icon = new ImageIcon(capture.getScaledInstance(500, 500, Image.SCALE_DEFAULT));
+            ImageIcon icon = new ImageIcon(capture.getScaledInstance(400, 400, Image.SCALE_DEFAULT));
             magnifiedView.setIcon(icon);
             try {
                 Thread.sleep(10); // Adjust refresh rate as needed

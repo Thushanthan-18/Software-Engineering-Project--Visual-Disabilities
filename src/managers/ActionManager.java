@@ -88,9 +88,10 @@ public class ActionManager {
 	      Resources.getIcon("listHC"), "Change HEAT Options",
 	      new Integer(KeyEvent.VK_D),
 	      KeyStroke.getKeyStroke(KeyEvent.VK_D, java.awt.Toolkit.getDefaultToolkit().getMenuShortcutKeyMask(), false));
+
     // Magnifier action
     private MagnifierAction toolbarMagniferAction = new MagnifierAction(
-            "",  // Text of the action
+            "",  // No text for magnification
             Resources.getIcon("magnifier22"),  // Icon representing the action
             "Magnify the view",  // What action will do
             null,  // No mnemonic key for mouse-triggered actions
@@ -682,7 +683,11 @@ public class ActionManager {
   }  end SaveFileAction */
 
 
-    //
+    /**
+     * Creates new Magnifier object(instance), when request received from button on the toolbar.
+     * @author Nishan Patel
+     *
+     */
     public class MagnifierAction extends AbstractAction {
 
 
