@@ -468,6 +468,8 @@ public class ActionManager {
         }
 
         public void actionPerformed(ActionEvent e) {
+
+            //Choose voice for TTS
             System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
             VoiceManager voiceManager = VoiceManager.getInstance();
             voice = voiceManager.getVoice("kevin16");
@@ -478,8 +480,7 @@ public class ActionManager {
                 System.out.println("Voice not found.");
             }
 
-            // Add caret listener to the text area
-
+            //Speak text if get selected in not null
 
             if (EditorWindow.jtaCodeView.getSelectedText() != null) {
                 speakText(EditorWindow.jtaCodeView.getSelectedText());
