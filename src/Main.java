@@ -89,7 +89,7 @@ public class Main {
         JPopupMenu contextMenu = new JPopupMenu();
         JMenuItem speakItem = new JMenuItem("Speak");
         contextMenu.add(speakItem);
-        ew.speak();
+       // ew.speak();
 
         if (sm.isNewSettingsFile()) {
             wm.showWizardWindow();
