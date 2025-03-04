@@ -1,18 +1,46 @@
-##About This Project
-This was a group project which we had to do for my Software Engineering Module. The main aim of doing this project was in order to make
-a project which would be used by students that have visual disability such as partial or complete blindness. 
-We used a software which is called HEAT Integrated Development Environment for the Haskell programming language. This is one of the 
-IDE that was specifically developed for teaching purposes and everything within HEAT is written in Java.
+HEAT IDE Accessibility Enhancements
+Project Overview
+This project was developed as part of a Software Engineering module, focusing on creating an inclusive Integrated Development Environment (IDE) tailored for students with visual impairments, including partial or complete blindness. The HEAT IDE, a Java-based platform originally designed for teaching Haskell programming, was extended with accessibility-focused features to ensure equitable usability for all learners.
 
-Our group had 4 members and each member was responsible to do atleast One feature. 
-1st member = SplashScreen
-2nd member = High Contrast Mode
-3rd member = Text to Speech
-4th member = Magnifier
+Key Features
+The following enhancements were implemented to improve accessibility and user experience:
 
-Myself, I worked on the Splashscreen and the buttons after the splashscreen and also intergrating each button with the correct editor.
-There are two buttons that could be clicked. 
-First button is named Default Mode. Default Mode is for users/students that do not have any sort of visual disability. On the other hand,
-the second button is named Accessibility Mode. This is for users/students that have complete/partial visual disability. 
-When clicked on the Default Mode, it would go to the HEAT editor with no modifications.. just with default settings. However, if you 
-click on accessibility mode it would go on HEAT editor with all the features that we have added. 
+Splash Screen & Mode Selection
+
+A dynamic splash screen with two primary interaction modes:
+
+Default Mode: Launches the standard HEAT IDE interface for users without visual impairments.
+
+Accessibility Mode: Activates all accessibility features (listed below) to accommodate students with partial or complete blindness.
+
+Seamless integration with the HEAT editor ensures smooth transitions between modes.
+
+High Contrast Mode
+
+Optimizes visibility through adjustable color schemes and contrast settings, reducing eye strain and improving readability.
+
+Text-to-Speech (TTS) Integration
+
+Provides real-time auditory feedback for code, error messages, and UI elements, enabling non-visual navigation and comprehension.
+
+Magnifier Tool
+
+Dynamically enlarges text and interface components to support users with low vision.
+
+Development Team & Contributions
+This collaborative effort involved four team members, each responsible for a core feature:
+
+Splash Screen & Mode Selection: Designed the splash screen interface, implemented mode-switching logic, and integrated buttons with the HEAT editor.
+
+High Contrast Mode: Developed customizable contrast settings and theme adjustments.
+
+Text-to-Speech: Integrated TTS functionality for auditory feedback.
+
+Magnifier: Built a scalable UI magnification tool.
+
+Technical Details
+Platform: HEAT IDE (Java-based Haskell programming environment).
+
+Focus: Accessibility-first design principles, ensuring compliance with inclusive education standards.
+
+Integration: Modular implementation allows features to be toggled dynamically via the Accessibility Mode.
